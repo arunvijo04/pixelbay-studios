@@ -213,6 +213,194 @@ export default function App() {
         </div>
       </section>
 
+     {/* Testimonials Section */}
+     <section className="min-h-screen px-6 md:px-12 py-24 bg-[#0e0e10] text-center">
+        <motion.h2
+          initial={{ opacity: 0, y: -20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6 }}
+          className="text-4xl font-bold mb-6 text-yellow-400"
+        >
+          Testimonials
+        </motion.h2>
+        <div className="grid md:grid-cols-3 gap-8">
+          <motion.div
+            whileInView={{ opacity: 1 }}
+            initial={{ opacity: 0 }}
+            transition={{ duration: 0.5 }}
+            className="bg-[#1f1f23] p-6 rounded shadow flex flex-col items-center"
+          >
+             <img
+              src="https://randomuser.me/api/portraits/women/42.jpg"
+              alt="Sara Patel"
+              className="w-16 h-16 rounded-full mb-4 border-2 border-yellow-400"
+            />
+            <p className="text-gray-300 mb-4 italic">“PixelBay transformed our website into a sleek, high-performing platform that doubled our engagement.”</p>
+            <h4 className="text-yellow-400 font-semibold">— Anjali Mehta, Marketing Lead</h4>
+          </motion.div>
+          <motion.div
+            whileInView={{ opacity: 1 }}
+            initial={{ opacity: 0 }}
+            transition={{ duration: 0.5, delay: 0.2 }}
+            className="bg-[#1f1f23] p-6 rounded shadow flex flex-col items-center"
+          >
+             <img
+              src="https://randomuser.me/api/portraits/men/44.jpg"
+              alt="Sara Patel"
+              className="w-16 h-16 rounded-full mb-4 border-2 border-yellow-400"
+            />
+            <p className="text-gray-300 mb-4 italic">“They delivered our app ahead of schedule with zero bugs and flawless UX. Highly recommend.”</p>
+            <h4 className="text-yellow-400 font-semibold">— Rahul Nair, Startup Founder</h4>
+          </motion.div>
+          <motion.div
+            whileInView={{ opacity: 1 }}
+            initial={{ opacity: 0 }}
+            transition={{ duration: 0.5, delay: 0.4 }}
+            className="bg-[#1f1f23] p-6 rounded shadow flex flex-col items-center"
+          >
+            <img
+              src="https://randomuser.me/api/portraits/women/44.jpg"
+              alt="Sara Patel"
+              className="w-16 h-16 rounded-full mb-4 border-2 border-yellow-400"
+            />
+            <p className="text-gray-300 mb-4 italic">“Super professional team. The design and functionality of our platform exceeded expectations.”</p>
+            <h4 className="text-yellow-400 font-semibold">— Sara Patel, Product Manager</h4>
+          </motion.div>
+        </div>
+      </section>
+
+
+      {/* Work/Projects Section */}
+      <section className="min-h-screen px-6 md:px-12 py-24 bg-[#1a1a1d] text-center">
+        <motion.h2
+          initial={{ opacity: 0, y: -20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6 }}
+          className="text-4xl font-bold mb-6 text-yellow-400"
+        >
+          Our Work
+        </motion.h2>
+        <div className="grid md:grid-cols-3 gap-6">
+          <div className="bg-[#2a2a2e] p-4 rounded shadow">
+            <img src="/work1.jpg" alt="Project 1" className="rounded mb-3" />
+            <h4 className="text-white font-semibold">E-Commerce Platform</h4>
+            <p className="text-gray-400 text-sm">Custom-built store with Stripe integration and CMS dashboard.</p>
+          </div>
+          <div className="bg-[#2a2a2e] p-4 rounded shadow">
+            <img src="/work2.png" alt="Project 2" className="rounded mb-3" />
+            <h4 className="text-white font-semibold">SaaS Dashboard</h4>
+            <p className="text-gray-400 text-sm">Analytics dashboard built with Next.js and Tailwind.</p>
+          </div>
+          <div className="bg-[#2a2a2e] p-4 rounded shadow">
+            <img src="/work3.png" alt="Project 3" className="rounded mb-3" />
+            <h4 className="text-white font-semibold">Portfolio Website</h4>
+            <p className="text-gray-400 text-sm">Sleek personal branding site for a design consultant.</p>
+          </div>
+        </div>
+      </section>
+
+          
+
+            {/* Pricing Section */}
+            <section className="min-h-screen px-6 md:px-12 py-24  bg-[#0e0e10] text-center">
+        <motion.h2
+          initial={{ opacity: 0, y: -20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6 }}
+          className="text-4xl font-bold mb-12 text-yellow-400"
+        >
+          Pricing Plans
+        </motion.h2>
+        <div className="grid md:grid-cols-3 gap-8 max-w-6xl mx-auto">
+          <div className="bg-[#2a2a2e] p-6 rounded shadow text-white">
+            <h3 className="text-2xl font-semibold mb-4">Starter</h3>
+            <p className="text-3xl font-bold mb-4">₹1000</p>
+            <ul className="text-left text-gray-300 mb-6 space-y-2">
+              <li>✔ 1-page custom website</li>
+              <li>✔ Basic SEO setup</li>
+              <li>✔ Responsive design</li>
+              <li>✔ 1-week delivery</li>
+            </ul>
+            <button className="bg-yellow-400 text-black py-2 px-4 rounded hover:bg-yellow-300 transition">Get Started</button>
+          </div>
+          <div className="bg-[#2a2a2e] p-6 rounded shadow text-white border-2 border-yellow-400">
+            <h3 className="text-2xl font-semibold mb-4">Pro</h3>
+            <p className="text-3xl font-bold mb-4">₹2500</p>
+            <ul className="text-left text-gray-300 mb-6 space-y-2">
+              <li>✔ Up to 5 pages</li>
+              <li>✔ Custom design & branding</li>
+              <li>✔ SEO & analytics setup</li>
+              <li>✔ CMS integration</li>
+              <li>✔ 2-week delivery</li>
+            </ul>
+            <button className="bg-yellow-400 text-black py-2 px-4 rounded hover:bg-yellow-300 transition">Choose Plan</button>
+          </div>
+          <div className="bg-[#2a2a2e] p-6 rounded shadow text-white">
+            <h3 className="text-2xl font-semibold mb-4">Enterprise</h3>
+            <p className="text-3xl font-bold mb-4">₹5000+</p>
+            <ul className="text-left text-gray-300 mb-6 space-y-2">
+              <li>✔ Unlimited pages</li>
+              <li>✔ Advanced integrations</li>
+              <li>✔ Custom backend features</li>
+              <li>✔ Dedicated support</li>
+              <li>✔ 3+ week delivery</li>
+            </ul>
+            <button className="bg-yellow-400 text-black py-2 px-4 rounded hover:bg-yellow-300 transition">Contact Us</button>
+          </div>
+        </div>
+      </section>
+
+
+        {/* FAQ Section */}
+        <section className="min-h-screen px-6 md:px-12 py-24  bg-[#1a1a1d] text-center">
+        <motion.h2
+          initial={{ opacity: 0, y: -20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6 }}
+          className="text-4xl font-bold mb-12 text-yellow-400"
+        >
+          Frequently Asked Questions
+        </motion.h2>
+
+        <motion.div
+          className="max-w-4xl mx-auto grid gap-8 text-left"
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true }}
+          variants={{
+            hidden: {},
+            visible: {
+              transition: {
+                staggerChildren: 0.2,
+              },
+            },
+          }}
+        >
+          {[{
+            question: "How long does a project take?",
+            answer: "Project timelines depend on complexity but most websites are delivered within 3–6 weeks."
+          }, {
+            question: "Do you offer post-launch support?",
+            answer: "Absolutely! We provide 30 days of free support and offer maintenance plans."
+          }, {
+            question: "What tech stacks do you use?",
+            answer: "We use React, Next.js, Tailwind CSS, Node.js, Firebase, and more—based on what suits your project best."
+          }].map((faq, i) => (
+            <motion.div
+              key={i}
+              className="bg-[#0e0e10] p-6 rounded-lg shadow hover:shadow-yellow-500/20 transition duration-300"
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: i * 0.2 }}
+            >
+              <h4 className="text-xl text-yellow-400 font-semibold mb-2">{faq.question}</h4>
+              <p className="text-gray-300 leading-relaxed">{faq.answer}</p>
+            </motion.div>
+          ))}
+        </motion.div>
+      </section>
+
+
       {/* Contact Section */}
       <section id="contact" className="min-h-screen px-6 md:px-12 py-24 bg-[#0e0e10] flex flex-col justify-center items-center">
         <motion.div
