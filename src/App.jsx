@@ -2,6 +2,30 @@ import React, { useState } from "react";
 import { motion } from "framer-motion";
 import logo from "/logo.jpg";
 import { Code, Smartphone, LayoutDashboard, ShoppingCart } from "lucide-react";
+import emailjs from '@emailjs/browser';
+
+const sendEmail = (e) => {
+  e.preventDefault();
+
+  emailjs
+    .sendForm(
+      'service_e5n8iqy', // your service ID
+      'template_xcyhdre', // your template ID
+      e.target,
+      '6Df7IJ68c_YCfHc9m' // replace this with your EmailJS public key
+    )
+    .then(
+      () => {
+        alert('Message sent successfully!');
+        e.target.reset();
+      },
+      (error) => {
+        alert('Failed to send message. Please try again later.');
+        console.error('EmailJS error:', error);
+      }
+    );
+};
+
 
 const services = [
   {
@@ -203,34 +227,38 @@ export default function App() {
             Whether you need a stunning website, powerful app, or a full-stack solution — we’re here to help!
           </p>
 
-          <form className="grid gap-5">
-            <motion.input
-              type="text"
-              placeholder="Your Name"
-              whileFocus={{ scale: 1.02 }}
-              className="p-3 rounded bg-[#1a1a1d] text-white focus:ring-2 ring-yellow-400 placeholder-gray-400"
-            />
-            <motion.input
-              type="email"
-              placeholder="Your Email"
-              whileFocus={{ scale: 1.02 }}
-              className="p-3 rounded bg-[#1a1a1d] text-white focus:ring-2 ring-yellow-400 placeholder-gray-400"
-            />
-            <motion.textarea
-              placeholder="Your Message"
-              rows="4"
-              whileFocus={{ scale: 1.02 }}
-              className="p-3 rounded bg-[#1a1a1d] text-white focus:ring-2 ring-yellow-400 placeholder-gray-400"
-            />
-            <motion.button
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-              type="submit"
-              className="bg-yellow-400 text-gray-900 font-semibold px-6 py-3 rounded transition hover:bg-yellow-300"
-            >
-              Send Message
-            </motion.button>
-          </form>
+          <form className="grid gap-5" onSubmit={sendEmail}>
+  <motion.input
+    type="text"
+    name="user_name" // <-- Required!
+    placeholder="Your Name"
+    whileFocus={{ scale: 1.02 }}
+    className="p-3 rounded bg-[#1a1a1d] text-white focus:ring-2 ring-yellow-400 placeholder-gray-400"
+  />
+  <motion.input
+    type="email"
+    name="user_email" // <-- Required!
+    placeholder="Your Email"
+    whileFocus={{ scale: 1.02 }}
+    className="p-3 rounded bg-[#1a1a1d] text-white focus:ring-2 ring-yellow-400 placeholder-gray-400"
+  />
+  <motion.textarea
+    name="message" // <-- Required!
+    placeholder="Your Message"
+    rows="4"
+    whileFocus={{ scale: 1.02 }}
+    className="p-3 rounded bg-[#1a1a1d] text-white focus:ring-2 ring-yellow-400 placeholder-gray-400"
+  />
+  <motion.button
+    whileHover={{ scale: 1.05 }}
+    whileTap={{ scale: 0.95 }}
+    type="submit"
+    className="bg-yellow-400 text-gray-900 font-semibold px-6 py-3 rounded transition hover:bg-yellow-300"
+  >
+    Send Message
+  </motion.button>
+</form>
+
         </motion.div>
       </section>
 
