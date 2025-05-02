@@ -1,8 +1,12 @@
-import React, { useState } from "react";
+import React, { useState, useCallback, useEffect  } from "react";
 import { motion } from "framer-motion";
 import logo from "/logo.jpg";
-import { Code, Smartphone, LayoutDashboard, ShoppingCart } from "lucide-react";
+import { Menu, X, Code, Smartphone, LayoutDashboard, ShoppingCart } from "lucide-react";
 import emailjs from '@emailjs/browser';
+import ParticleBackground from "./ParticleBackground"
+import Loader from "./Loader"; 
+import { div } from "framer-motion/client";
+
 
 const sendEmail = (e) => {
   e.preventDefault();
@@ -55,65 +59,118 @@ const team = [
 ];
 
 export default function App() {
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    // Hide the loader after 5 seconds
+    const timer = setTimeout(() => {
+      setLoading(false);
+    }, 2000); // 5 seconds
+
+    return () => clearTimeout(timer); // Clean up the timeout on component unmount
+  }, []);
+
+  const [menuOpen, setMenuOpen] = useState(false); 
   const [query, setQuery] = useState("");
   const filteredServices = services.filter((s) =>
     s.title.toLowerCase().includes(query.toLowerCase())
   );
 
   return (
-    <div className="bg-[#0e0e10] text-white font-['Poppins']">
-      {/* Navbar */}
-      <nav className="flex justify-between items-center px-6 py-4 bg-[#1a1a1d] shadow-lg fixed top-0 left-0 right-0 z-50">
-        <div className="flex items-center gap-3">
-          <img src={logo} alt="PixelBay Logo" className="w-10 h-10 rounded" />
-          <h1 className="text-xl font-bold text-yellow-400">PixelBay Studios</h1>
-        </div>
-        <div className="hidden md:flex gap-6">
-          <a href="#home" className="hover:text-yellow-400 transition">Home</a>
-          <a href="#about" className="hover:text-yellow-400 transition">About</a>
-          <a href="#services" className="hover:text-yellow-400 transition">Services</a>
-          <a href="#team" className="hover:text-yellow-400 transition">Team</a>
-          <a href="#contact" className="hover:text-yellow-400 transition">Contact</a>
-        </div>
-      </nav>
+    <div>
+      {loading?
+      (<Loader />):
+      (<div className="relative overflow-x-hidden bg-[#0e0e10] text-white font-['Poppins']">
+      {/* Particle background covering full page */}
+      <div className="fixed inset-0 -z-10">
+  <ParticleBackground />
+</div>
+
+
+     <div className="relative z-10">
+     <nav className="fixed top-0 left-0 right-0 z-50 bg-[#1a1a1d]/60 backdrop-blur-md shadow-lg border-b border-white/10 px-6 py-4">
+      <div className="flex justify-between items-center">
+    {/* Logo + Title */}
+    <div className="flex items-center gap-3">
+      <img src={logo} alt="PixelBay Logo" className="w-10 h-10 rounded-full border border-yellow-400" />
+      <h1 className="text-xl font-bold text-yellow-400">PixelBay Studios</h1>
+    </div>
+
+    {/* Desktop Menu */}
+    <div className="hidden md:flex gap-6 text-white font-medium">
+      <a href="#home" className="hover:text-yellow-400 transition">Home</a>
+      <a href="#about" className="hover:text-yellow-400 transition">About</a>
+      <a href="#services" className="hover:text-yellow-400 transition">Services</a>
+      <a href="#team" className="hover:text-yellow-400 transition">Team</a>
+      <a href="#contact" className="hover:text-yellow-400 transition">Contact</a>
+    </div>
+
+    {/* Mobile Hamburger */}
+    <div className="md:hidden text-white">
+      <button onClick={() => setMenuOpen(!menuOpen)} aria-label="Toggle Menu">
+        {menuOpen ? <X size={28} /> : <Menu size={28} />}
+      </button>
+    </div>
+  </div>
+
+  {/* Mobile Menu Dropdown with animation */}
+  <div
+    className={`md:hidden transition-all duration-300 ease-in-out overflow-hidden ${
+      menuOpen ? "max-h-96 opacity-100 mt-4" : "max-h-0 opacity-0"
+    }`}
+  >
+    <div className="flex flex-col gap-4 bg-[#1a1a1d]/90 backdrop-blur-md rounded-lg p-4 text-white">
+      <a href="#home" className="hover:text-yellow-400" onClick={() => setMenuOpen(false)}>Home</a>
+      <a href="#about" className="hover:text-yellow-400" onClick={() => setMenuOpen(false)}>About</a>
+      <a href="#services" className="hover:text-yellow-400" onClick={() => setMenuOpen(false)}>Services</a>
+      <a href="#team" className="hover:text-yellow-400" onClick={() => setMenuOpen(false)}>Team</a>
+      <a href="#contact" className="hover:text-yellow-400" onClick={() => setMenuOpen(false)}>Contact</a>
+    </div>
+  </div>
+</nav>
+
 
       {/* Home Section with Video Background */}
-      <section id="home" className="relative min-h-screen flex items-center justify-center overflow-hidden">
-        <video
-          autoPlay
-          loop
-          muted
-          playsInline
-          className="absolute top-0 left-0 w-full h-full object-cover opacity-100"
-        >
-          <source src="/tech-bg.mp4" type="video/mp4" />
-        </video>
+<section
+  id="home"
+  className="relative min-h-screen flex items-center justify-center overflow-hidden overflow-x-hidden"
+>
+  <video
+    autoPlay
+    loop
+    muted
+    playsInline
+    className="absolute top-0 left-0 w-full h-full object-cover object-center"
+  >
+    <source src="/tech-bg.mp4" type="video/mp4" />
+  </video>
 
-        <div className="relative z-10 text-center px-4 pt-20 md:pt-0">
-          <motion.h1
-            initial={{ opacity: 0, y: -50 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 1 }}
-            className="text-5xl md:text-6xl font-black text-blue-400 drop-shadow-xl"
-          >
-            PixelBay <span className="text-yellow-400">Studios</span>
-          </motion.h1>
-          <motion.p
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.5, duration: 1 }}
-            className="text-lg md:text-2xl text-gray-300 mt-4 max-w-xl mx-auto drop-shadow-md"
-          >
-            Crafting Digital Excellence – One Pixel at a Time
-          </motion.p>
-        </div>
+  <div className="relative z-10 text-center px-4 pt-20 md:pt-0">
+    <motion.h1
+      initial={{ opacity: 0, y: -50 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 1 }}
+      className="text-5xl md:text-6xl font-black text-blue-400 drop-shadow-xl"
+    >
+      PixelBay <span className="text-yellow-400">Studios</span>
+    </motion.h1>
+    <motion.p
+      initial={{ opacity: 0, y: 30 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ delay: 0.5, duration: 1 }}
+      className="text-lg md:text-2xl text-gray-300 mt-4 max-w-xl mx-auto drop-shadow-md"
+    >
+      Crafting Digital Excellence – One Pixel at a Time
+    </motion.p>
+  </div>
 
-        <div className="absolute top-0 left-0 w-full h-full bg-gradient-to-b from-black/80 to-[#0e0e10]" />
-      </section>
+  <div className="absolute top-0 left-0 w-full h-full bg-gradient-to-b from-black/80 to-[#0e0e10]" />
+</section>
+
 
       {/* About Section */}
-      <section id="about" className="min-h-screen px-6 md:px-12 py-24 bg-[#1a1a1d] flex items-center justify-center">
-        <div className="max-w-6xl w-full grid md:grid-cols-2 gap-10 items-center">
+      <section id="about" className="min-h-screen px-6 md:px-12 py-24  flex items-center justify-center">
+        <div className="max-w-6xl w-full grid md:grid-cols-2 gap-18 items-center">
           <motion.div
             initial={{ opacity: 0, x: -40 }}
             whileInView={{ opacity: 1, x: 0 }}
@@ -140,7 +197,7 @@ export default function App() {
             className="rounded-lg overflow-hidden shadow-lg"
           >
             <img
-              src="/about.jpg"
+              src="/post.png"
               alt="About PixelBay"
               className="w-full h-auto object-cover rounded-lg"
             />
@@ -149,7 +206,7 @@ export default function App() {
       </section>
 
       {/* Services Section */}
-      <section id="services" className="min-h-screen px-6 md:px-12 py-24 flex flex-col justify-center bg-[#0e0e10]">
+      <section id="services" className="min-h-screen px-6 md:px-12 py-24 flex flex-col justify-center ">
         <motion.h2
           initial={{ opacity: 0, y: -20 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -189,7 +246,7 @@ export default function App() {
       </section>
 
       {/* Team Section */}
-      <section id="team" className="min-h-screen px-6 md:px-12 py-20 bg-[#1a1a1d] flex flex-col justify-center">
+      {/*<section id="team" className="min-h-screen px-6 md:px-12 py-20  flex flex-col justify-center">
         <h2 className="text-4xl font-bold mb-6 text-yellow-400">Meet the Team</h2>
         <div className="grid sm:grid-cols-2 md:grid-cols-3 gap-6">
           {team.map((member, i) => (
@@ -211,7 +268,7 @@ export default function App() {
             </motion.div>
           ))}
         </div>
-      </section>
+      </section>*/}
 
      {/* Testimonials Section */}
      <section className="min-h-screen px-6 md:px-12 py-24 bg-[#0e0e10] text-center">
@@ -271,7 +328,7 @@ export default function App() {
 
 
       {/* Work/Projects Section */}
-      <section className="min-h-screen px-6 md:px-12 py-24 bg-[#1a1a1d] text-center">
+      <section className="min-h-screen px-6 md:px-12 py-24  text-center">
         <motion.h2
           initial={{ opacity: 0, y: -20 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -302,7 +359,7 @@ export default function App() {
           
 
             {/* Pricing Section */}
-            <section className="min-h-screen px-6 md:px-12 py-24  bg-[#0e0e10] text-center">
+            <section className="min-h-screen px-6 md:px-12 py-24   text-center">
         <motion.h2
           initial={{ opacity: 0, y: -20 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -352,7 +409,7 @@ export default function App() {
 
 
         {/* FAQ Section */}
-        <section className="min-h-screen px-6 md:px-12 py-24  bg-[#1a1a1d] text-center">
+        <section className="min-h-screen px-6 md:px-12 py-24  text-center">
         <motion.h2
           initial={{ opacity: 0, y: -20 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -388,7 +445,7 @@ export default function App() {
           }].map((faq, i) => (
             <motion.div
               key={i}
-              className="bg-[#0e0e10] p-6 rounded-lg shadow hover:shadow-yellow-500/20 transition duration-300"
+              className="bg-[#1a1a1d] p-6 rounded-lg shadow hover:shadow-yellow-500/20 transition duration-300"
               initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: i * 0.2 }}
@@ -401,59 +458,78 @@ export default function App() {
       </section>
 
 
-      {/* Contact Section */}
-      <section id="contact" className="min-h-screen px-6 md:px-12 py-24 bg-[#0e0e10] flex flex-col justify-center items-center">
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6 }}
-          className="w-full max-w-3xl text-center"
-        >
-          <h2 className="text-4xl font-bold text-yellow-400 mb-4">Contact Us</h2>
-          <p className="text-gray-300 mb-2 italic">Let’s connect and turn your idea into a digital reality ✨</p>
-          <p className="text-gray-400 mb-8">
-            Whether you need a stunning website, powerful app, or a full-stack solution — we’re here to help!
-          </p>
-
-          <form className="grid gap-5" onSubmit={sendEmail}>
-  <motion.input
-    type="text"
-    name="user_name" // <-- Required!
-    placeholder="Your Name"
-    whileFocus={{ scale: 1.02 }}
-    className="p-3 rounded bg-[#1a1a1d] text-white focus:ring-2 ring-yellow-400 placeholder-gray-400"
-  />
-  <motion.input
-    type="email"
-    name="user_email" // <-- Required!
-    placeholder="Your Email"
-    whileFocus={{ scale: 1.02 }}
-    className="p-3 rounded bg-[#1a1a1d] text-white focus:ring-2 ring-yellow-400 placeholder-gray-400"
-  />
-  <motion.textarea
-    name="message" // <-- Required!
-    placeholder="Your Message"
-    rows="4"
-    whileFocus={{ scale: 1.02 }}
-    className="p-3 rounded bg-[#1a1a1d] text-white focus:ring-2 ring-yellow-400 placeholder-gray-400"
-  />
-  <motion.button
-    whileHover={{ scale: 1.05 }}
-    whileTap={{ scale: 0.95 }}
-    type="submit"
-    className="bg-yellow-400 text-gray-900 font-semibold px-6 py-3 rounded transition hover:bg-yellow-300"
+      {/* Contact Section with Video Background */}
+<section
+  id="contact"
+  className="relative min-h-screen px-6 md:px-12 py-24 bg-[#0e0e10] flex flex-col justify-center items-center overflow-hidden"
+>
+  <video
+    autoPlay
+    loop
+    muted
+    playsInline
+    className="absolute top-0 left-0 w-full h-full object-cover object-center"
   >
-    Send Message
-  </motion.button>
-</form>
+    <source src="/contact.mp4" type="video/mp4" />
+  </video>
 
-        </motion.div>
-      </section>
+  <div className="relative z-10 w-full max-w-3xl text-center">
+    <motion.h2
+      initial={{ opacity: 0, y: 20 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.6 }}
+      className="text-4xl font-bold text-yellow-400 mb-4"
+    >
+      Contact Us
+    </motion.h2>
+    <p className="text-gray-300 mb-2 italic">Let’s connect and turn your idea into a digital reality ✨</p>
+    <p className="text-gray-400 mb-8">
+      Whether you need a stunning website, powerful app, or a full-stack solution — we’re here to help!
+    </p>
+
+    <form className="grid gap-5" onSubmit={sendEmail}>
+      <motion.input
+        type="text"
+        name="user_name" // <-- Required!
+        placeholder="Your Name"
+        whileFocus={{ scale: 1.02 }}
+        className="p-3 rounded bg-[#1a1a1d] text-white focus:ring-2 ring-yellow-400 placeholder-gray-400"
+      />
+      <motion.input
+        type="email"
+        name="user_email" // <-- Required!
+        placeholder="Your Email"
+        whileFocus={{ scale: 1.02 }}
+        className="p-3 rounded bg-[#1a1a1d] text-white focus:ring-2 ring-yellow-400 placeholder-gray-400"
+      />
+      <motion.textarea
+        name="message" // <-- Required!
+        placeholder="Your Message"
+        rows="4"
+        whileFocus={{ scale: 1.02 }}
+        className="p-3 rounded bg-[#1a1a1d] text-white focus:ring-2 ring-yellow-400 placeholder-gray-400"
+      />
+      <motion.button
+        whileHover={{ scale: 1.05 }}
+        whileTap={{ scale: 0.95 }}
+        type="submit"
+        className="bg-yellow-400 text-gray-900 font-semibold px-6 py-3 rounded transition hover:bg-yellow-300"
+      >
+        Send Message
+      </motion.button>
+    </form>
+  </div>
+
+  {/* Overlay for the background video */}
+  <div className="absolute top-0 left-0 w-full h-full bg-gradient-to-b from-[#0e0e10] to-black/90" />
+</section>
 
       {/* Footer */}
       <footer className="bg-[#1a1a1d] py-6 text-center text-gray-500">
         © {new Date().getFullYear()} PixelBay. All rights reserved.
       </footer>
+     </div>
+    </div>)}
     </div>
   );
 }
