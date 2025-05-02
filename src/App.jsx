@@ -27,7 +27,7 @@ const services = [
 ];
 
 const team = [
-  { name: "Arun Vijo", role: "Founder & CEO" },
+  { name: "Arun Vijo", role: "Founder & CEO",image: "/arun.png" },
 ];
 
 export default function App() {
@@ -177,7 +177,11 @@ export default function App() {
               viewport={{ once: true }}
               className="bg-[#2a2a2e] p-6 rounded shadow text-center hover:shadow-lg"
             >
-              <div className="w-20 h-20 bg-gray-600 rounded-full mx-auto mb-4" />
+              <img
+                src={member.image}
+                alt={member.name}
+                className="w-20 h-20 rounded-full mx-auto mb-4 object-cover border-2 border-[#facc15]"
+              />
               <h4 className="text-lg font-semibold text-yellow-400">{member.name}</h4>
               <p className="text-gray-300">{member.role}</p>
             </motion.div>
